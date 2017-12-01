@@ -1,5 +1,8 @@
-﻿using System;
+﻿using HtmlAgilityPack;
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,6 +13,41 @@ namespace FreeShadowSocks
     {
         static void Main(string[] args)
         {
+            Console.WriteLine("启动中...");
+            Process[] p = Process.GetProcessesByName("Shadowsocks");
+            if (p.Length > 0)
+            {
+                p[0].Kill();
+            }
+
+            string result = string.Empty;
+            string url = "https://go.ishadowx.net/";
+            HtmlWeb htmlWeb = new HtmlWeb();
+            htmlWeb.OverrideEncoding = Encoding.Default;
+            HtmlDocument htmlDoc = htmlWeb.Load(url);
+            HtmlNode nodes = htmlDoc.GetElementbyId("ipusa");
+
+            string server = htmlDoc.GetElementbyId("ipusa").InnerText.Trim();
+            string port = htmlDoc.GetElementbyId("portusa").InnerText.Trim();
+            string pw = htmlDoc.GetElementbyId("pwusa").InnerText.Trim();
+            string method = "aes-256-cfb";
+            string config = "{'configs' : [  {'server' : '{server}','server_port' : {port},'password' : '{pw}','method' : '{method}','remarks' : ''}],'strategy' : null,'index' : 0,'global' : false,'enabled' : true,'shareOverLan' : false,'isDefault' : false,'localPort' : 1080,'pacUrl' : null,'useOnlinePac' : false}";
+            config = config.Replace("'", "\"").Replace("{server}", server).Replace("{port}", port).Replace("{pw}", pw).Replace("{method}", method);
+
+            Write(config, "gui-config.json");
+
+            Process.Start("Shadowsocks.exe");
+        }
+
+        static void Write(string message, string filePath)
+        {
+            FileStream fileStream = new FileStream(filePath, FileMode.Create);
+            StreamWriter streamWriter = new StreamWriter(fileStream, Encoding.Default);
+
+            streamWriter.WriteLine(message);
+
+            streamWriter.Close();
+            fileStream.Close();
         }
     }
 }
