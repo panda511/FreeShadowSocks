@@ -24,7 +24,7 @@ namespace FreeShadowSocks
 
             //抓取免费服务器并生成ss配置文件
             string result = string.Empty;
-            string url = "https://1hv.top/";
+            string url = "https://1hv.top/"; 
             HtmlWeb htmlWeb = new HtmlWeb();
             htmlWeb.OverrideEncoding = Encoding.Default;
             HtmlDocument htmlDoc = htmlWeb.Load(url);
