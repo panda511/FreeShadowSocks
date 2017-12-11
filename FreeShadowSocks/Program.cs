@@ -24,15 +24,15 @@ namespace FreeShadowSocks
 
             //抓取免费服务器并生成ss配置文件
             string result = string.Empty;
-            string url = "https://go.ishadowx.net/";
+            string url = "https://1hv.top/";
             HtmlWeb htmlWeb = new HtmlWeb();
             htmlWeb.OverrideEncoding = Encoding.Default;
             HtmlDocument htmlDoc = htmlWeb.Load(url);
-            HtmlNode nodes = htmlDoc.GetElementbyId("ipusa");
+            HtmlNode nodes = htmlDoc.GetElementbyId("port");
 
-            string server = htmlDoc.GetElementbyId("ipusa").InnerText.Trim();
-            string port = htmlDoc.GetElementbyId("portusa").InnerText.Trim();
-            string pw = htmlDoc.GetElementbyId("pwusa").InnerText.Trim();
+            string server = "139.162.87.254";
+            string port = htmlDoc.GetElementbyId("port").InnerText.Trim();
+            string pw = htmlDoc.GetElementbyId("pw").InnerText.Trim();
             string method = "aes-256-cfb";
             string config = "{'configs' : [  {'server' : '{server}','server_port' : {port},'password' : '{pw}','method' : '{method}','remarks' : ''}],'strategy' : null,'index' : 0,'global' : false,'enabled' : true,'shareOverLan' : false,'isDefault' : false,'localPort' : 1080,'pacUrl' : null,'useOnlinePac' : false}";
             config = config.Replace("'", "\"").Replace("{server}", server).Replace("{port}", port).Replace("{pw}", pw).Replace("{method}", method);
