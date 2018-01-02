@@ -15,14 +15,12 @@ namespace FreeShadowSocks
         {
             Console.WriteLine("启动中...");
 
-            //关闭ss进程
             Process[] p = Process.GetProcessesByName("Shadowsocks");
             if (p.Length > 0)
             {
                 p[0].Kill();
             }
 
-            //抓取免费服务器并生成ss配置文件
             string result = string.Empty;
             string url = "https://1hv.top/"; 
             HtmlWeb htmlWeb = new HtmlWeb();
