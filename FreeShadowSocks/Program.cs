@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Threading;
 
 namespace FreeShadowSocks
 {
@@ -38,6 +39,10 @@ namespace FreeShadowSocks
             Write(config, "gui-config.json");
 
             Process.Start("Shadowsocks.exe");
+
+            Console.WriteLine("启动成功。");
+
+            Thread.Sleep(1000);
         }
 
         static void Write(string message, string filePath)
