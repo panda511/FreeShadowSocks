@@ -47,13 +47,15 @@ namespace FreeShadowSocks
 
         static void Write(string message, string filePath)
         {
-            FileStream fileStream = new FileStream(filePath, FileMode.Create);
-            StreamWriter streamWriter = new StreamWriter(fileStream, Encoding.Default);
-
-            streamWriter.WriteLine(message);
-
-            streamWriter.Close();
-            fileStream.Close();
+            using (FileStream fileStream = new FileStream(filePath, FileMode.Create))
+            {
+                using (StreamWriter streamWriter = new StreamWriter(fileStream, Encoding.UTF8))
+                {
+                    streamWriter.WriteLine(message);
+                    streamWriter.Close();
+                }
+                fileStream.Close();
+            }
         }
     }
 }
